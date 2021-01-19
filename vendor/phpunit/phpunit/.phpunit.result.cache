@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":247:{a:2:{s:7:"defects";a:2:{s:35:"ClassDiviTest::testShouldInitModule";i:3;s:41:"ClassDiviTest::testShouldSkipCacheBusting";i:4;}s:5:"times";a:2:{s:35:"ClassDiviTest::testShouldInitModule";d:0.01;s:41:"ClassDiviTest::testShouldSkipCacheBusting";d:0;}}}
