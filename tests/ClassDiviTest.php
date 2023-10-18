@@ -9,6 +9,7 @@ use Brain\Monkey\Actions;
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use wpCloud\StatelessMedia\WPStatelessStub;
+use wpCloud\StatelessMedia\Utility;
 
 /**
  * Class ClassDiviTest
@@ -25,7 +26,8 @@ class ClassDiviTest extends TestCase {
 		Monkey\setUp();
 
     // WP mocks
-    Functions\when('wp_upload_dir')->justReturn( self::TEST_UPLOAD_DIR );
+    // Functions\when('wp_upload_dir')->justReturn( self::TEST_UPLOAD_DIR );
+    Functions\when('wp_doing_ajax')->justReturn( true );
         
     // WP_Stateless mocks
     // Filters\expectApplied('wp_stateless_file_name')
@@ -53,17 +55,46 @@ class ClassDiviTest extends TestCase {
     //   ->method('remove_filter')
     //   ->with('sanitize_file_name');
 
-    // $divi = new Divi();
-    // $divi->module_init([]);
+    $divi = new Divi();
+
+    add_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]);
+
+    $divi->module_init([]);
+
+    self::assertNotFalse( has_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]) );
+    self::assertNotFalse( has_filter('stateless_skip_cache_busting', [ $divi, 'maybe_skip_cache_busting' ]) );
+  }
+
+  public function testShouldInitModuleAjax() {
+    $divi = new Divi();
+
+    $_POST['action'] = 'et_core_portability_export';
+
+    add_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]);
+
+    $divi->module_init([]);
+    
+    self::assertFalse( has_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]) );
+    self::assertNotFalse( has_filter('stateless_skip_cache_busting', [ $divi, 'maybe_skip_cache_busting' ]) );
   }
 
   public function testShouldSkipCacheBusting() {
-    // $divi = new Divi();
+    $divi = new Divi();
 
-    // $this->assertEquals('https://test.test/test/test.test', $divi->maybe_skip_cache_busting(null, 'https://test.test/test/test.test'));
+    self::assertEquals(
+      'https://test.test/test/test.test', 
+      $divi->maybe_skip_cache_busting(null, 'https://test.test/test/test.test')
+    );
   }
-}
 
-function wp_doing_ajax() {
-  return true;
+  public function testShouldNotSkipCacheBusting() {
+    $divi = new Divi();
+
+    Utility::setCallStackMatches(false);
+
+    self::assertEquals(
+      null, 
+      $divi->maybe_skip_cache_busting(null, 'https://test.test/test/test.test')
+    );
+  }
 }

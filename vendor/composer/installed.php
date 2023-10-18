@@ -3,7 +3,7 @@
         'name' => 'udx/wp-stateless-divi-addon',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'e0f7e75b2583af5f20862645afec56eca28d030e',
+        'reference' => 'd67b0470a38ce067a4f40c4ad9761bbd9e407720',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -319,7 +319,7 @@
         'udx/wp-stateless-divi-addon' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'e0f7e75b2583af5f20862645afec56eca28d030e',
+            'reference' => 'd67b0470a38ce067a4f40c4ad9761bbd9e407720',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

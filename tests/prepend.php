@@ -29,7 +29,17 @@ class WPStatelessStub {
 }
 
 class Utility {
+  private static $callStackMatches = true;
+
   public static function isCallStackMatches (): bool {
-    return true;
+    return self::$callStackMatches;
+  }
+
+  public static function setCallStackMatches (bool $value) {
+    self::$callStackMatches = $value;
+  }
+
+  public static function randomize_filename (): string {
+    return '';
   }
 }
