@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: WP-Stateless - Divi Addon
+ * Plugin Name: WP-Stateless - Divi theme Addon
  * Plugin URI: https://wp-stateless.github.io/
  * Description: Ensures compatibility with Divi theme.
  * Author: UDX

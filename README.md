@@ -1,4 +1,4 @@
-# WP-Stateless - Divi Addon
+# WP-Stateless - Divi theme Addon
 
 Ensures compatibility with Divi theme.
 

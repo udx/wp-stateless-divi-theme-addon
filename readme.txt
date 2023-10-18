@@ -1,4 +1,4 @@
-=== WP-Stateless - Divi Addon ===
+=== WP-Stateless - Divi theme Addon ===
 Contributors: usability_dynamics, andypotanin, ideric, maxim.peshkov, Anton Korotkoff, planvova, balexey88
 Donate link: https://udx.io
 Tags: google, google cloud, google cloud storage, cdn, uploads, media, stateless, backup
