@@ -2,13 +2,14 @@
 
 /**
  * Plugin Name: WP-Stateless - Divi theme Addon
- * Plugin URI: https://wp-stateless.github.io/
- * Description: Ensures compatibility with Divi theme.
+ * Plugin URI: https://stateless.udx.io/addons/divi/
+ * Description: Provides compatibility between Divi theme and WP-Stateless plugins.
  * Author: UDX
  * Version: 0.0.1
  * Text Domain: wpsdivi
  * Author URI: https://udx.io
  * License: MIT
+ * Network: true
  * 
  * Copyright 2023 UDX (email: info@udx.io)
  */
