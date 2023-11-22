@@ -1,14 +1,11 @@
 # WP-Stateless - Divi theme Addon
 
-Provides compatibility between Divi theme and WP-Stateless plugins.
-
-- [WP-Stateless](https://wordpress.org/plugins/wp-stateless/)
-- [Divi theme](https://www.elegantthemes.com/gallery/divi/) 
+Provides compatibility between the [Divi theme](https://www.elegantthemes.com/gallery/divi/) and the [WP-Stateless](https://wordpress.org/plugins/wp-stateless/) plugins.
 
 ### Features
 
 * Exclude randomize file name while doing export.
-* Skip cache busting for Page Builder.
+* Skip cache busting for page builder.
 
 ### Notes
 
@@ -29,11 +26,11 @@ We encourage community feedback and discussion through issues on the [GitHub rep
 <details>
 <summary>Can I test new features before they are released?</summary>
 
-To ensure new releases cause as little disruption as possible, we rely on a number of early adopters who assist us by testing out new features before they are released. [Please contact us](https://udx.io/) if you are interested in becoming an early adopter.
+To ensure new releases cause as little disruption as possible, we rely on early adopters who assist us by testing out new features before they are released. [Please contact us](https://udx.io/) if you are interested in becoming an early adopter.
 </details>
 
 <details>
 <summary>Who maintains this plugin?</summary>
 
-[UDX](https://udx.io/) maintains this plugin by continuing development through it's own staff, reviewing pull requests, testing, and steering the overall release schedule. UDX is located in Durham, North Carolina and provides WordPress engineering and hosting services to clients throughout the United States.
+[UDX](https://udx.io/) maintains this plugin by continuing development through its own staff, reviewing pull requests, testing, and steering the overall release schedule. UDX is located in Durham, North Carolina, and provides WordPress engineering and hosting services to clients throughout the United States.
 </details>
