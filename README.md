@@ -1,6 +1,6 @@
 # WP-Stateless - Divi theme Addon
 
-Provides compatibility between the [Divi theme](https://www.elegantthemes.com/gallery/divi/) and the [WP-Stateless](https://wordpress.org/plugins/wp-stateless/) plugins.
+Provides compatibility between the [Divi theme](https://www.elegantthemes.com/gallery/divi/) and the [WP-Stateless](https://wordpress.org/plugins/wp-stateless/) plugin.
 
 ### Features
 
