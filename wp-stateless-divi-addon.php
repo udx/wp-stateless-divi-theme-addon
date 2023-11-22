@@ -3,7 +3,7 @@
 /**
  * Plugin Name: WP-Stateless - Divi theme Addon
  * Plugin URI: https://stateless.udx.io/addons/divi/
- * Description: Provides compatibility between Divi theme and WP-Stateless plugins.
+ * Description: Provides compatibility between the Divi theme and the WP-Stateless plugin.
  * Author: UDX
  * Version: 0.0.1
  * Text Domain: wpsdivi
