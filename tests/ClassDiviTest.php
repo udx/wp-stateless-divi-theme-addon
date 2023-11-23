@@ -1,97 +1,100 @@
 <?php
 
+namespace WPSL\Divi;
+
 use PHPUnit\Framework\TestCase;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Brain\Monkey;
+use Brain\Monkey\Actions;
+use Brain\Monkey\Filters;
+use Brain\Monkey\Functions;
 use wpCloud\StatelessMedia\WPStatelessStub;
-use WPSL\Divi\Divi;
+use wpCloud\StatelessMedia\Utility;
 
 /**
  * Class ClassDiviTest
  */
 class ClassDiviTest extends TestCase {
 
+  // Adds Mockery expectations to the PHPUnit assertions count.
+  use MockeryPHPUnitIntegration;
+
   public static $functions;
 
   public function setUp(): void {
-    self::$functions = $this->createPartialMock(
-      ClassDiviTest::class,
-      ['add_filter', 'add_action', 'apply_filters', 'do_action', 'remove_filter']
-    );
+		parent::setUp();
+		Monkey\setUp();
 
-    $this::$functions->method('apply_filters')->will($this->returnArgument(1));
+    // WP mocks
+    // Functions\when('wp_upload_dir')->justReturn( self::TEST_UPLOAD_DIR );
+    Functions\when('wp_doing_ajax')->justReturn( true );
+        
+    // WP_Stateless mocks
+    // Filters\expectApplied('wp_stateless_file_name')
+    //   ->andReturn( self::TEST_FILE );
+
+    // Filters\expectApplied('wp_stateless_handle_root_dir')
+    //   ->andReturn( 'uploads' );
+
+    Functions\when('ud_get_stateless_media')->justReturn( WPStatelessStub::instance() );
   }
 
+  public function tearDown(): void {
+		Monkey\tearDown();
+		parent::tearDown();
+	}
+
   public function testShouldInitModule() {
-    self::$functions->expects($this->exactly(1))
-      ->method('add_filter')
-      ->with('stateless_skip_cache_busting');
+    // self::$functions->expects($this->exactly(1))
+    //   ->method('add_filter')
+    //   ->with('stateless_skip_cache_busting');
+
+    // $_POST['action'] = 'et_core_portability_export';
+
+    // self::$functions->expects($this->exactly(1))
+    //   ->method('remove_filter')
+    //   ->with('sanitize_file_name');
+
+    $divi = new Divi();
+
+    add_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]);
+
+    $divi->module_init([]);
+
+    self::assertNotFalse( has_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]) );
+    self::assertNotFalse( has_filter('stateless_skip_cache_busting', [ $divi, 'maybe_skip_cache_busting' ]) );
+  }
+
+  public function testShouldInitModuleAjax() {
+    $divi = new Divi();
 
     $_POST['action'] = 'et_core_portability_export';
 
-    self::$functions->expects($this->exactly(1))
-      ->method('remove_filter')
-      ->with('sanitize_file_name');
+    add_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]);
 
-    $divi = new Divi();
     $divi->module_init([]);
+    
+    self::assertFalse( has_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]) );
+    self::assertNotFalse( has_filter('stateless_skip_cache_busting', [ $divi, 'maybe_skip_cache_busting' ]) );
   }
 
   public function testShouldSkipCacheBusting() {
     $divi = new Divi();
 
-    $this->assertEquals('https://test.test/test/test.test', $divi->maybe_skip_cache_busting(null, 'https://test.test/test/test.test'));
+    self::assertEquals(
+      'https://test.test/test/test.test', 
+      $divi->maybe_skip_cache_busting(null, 'https://test.test/test/test.test')
+    );
   }
 
-  public function add_filter() {
+  public function testShouldNotSkipCacheBusting() {
+    $divi = new Divi();
+
+    Utility::setCallStackMatches(false);
+
+    self::assertEquals(
+      null, 
+      $divi->maybe_skip_cache_busting(null, 'https://test.test/test/test.test')
+    );
   }
-
-  public function add_action() {
-  }
-
-  public function apply_filters($a, $b) {
-  }
-
-  public function do_action($a, ...$b) {
-  }
-
-  public function remove_filter($a, ...$b) {
-  }
-
-  public function debug_backtrace($a, $b) {
-  }
-
-}
-
-function add_filter($a, $b, $c = 10, $d = 1) {
-  return ClassDiviTest::$functions->add_filter($a, $b, $c, $d);
-}
-
-function add_action($a, $b, $c = 10, $d = 1) {
-  return ClassDiviTest::$functions->add_action($a, $b, $c, $d);
-}
-
-function apply_filters($a, $b) {
-  return ClassDiviTest::$functions->apply_filters($a, $b);
-}
-
-function do_action($a, ...$b) {
-  return ClassDiviTest::$functions->do_action($a, ...$b);
-}
-
-function remove_filter($a, $b) {
-  return ClassDiviTest::$functions->remove_filter($a, $b);
-}
-
-function wp_doing_ajax() {
-  return true;
-}
-
-function wp_get_upload_dir() {
-  return [
-    'baseurl' => 'https://test.test/uploads',
-    'basedir' => '/var/www/uploads'
-  ];
-}
-
-function ud_get_stateless_media() {
-  return WPStatelessStub::instance();
 }
