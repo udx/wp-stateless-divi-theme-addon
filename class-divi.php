@@ -1,12 +1,12 @@
 <?php
 
-namespace WPSL\Divi;
+namespace SLCA\Divi;
 
 use wpCloud\StatelessMedia\Compatibility;
 use wpCloud\StatelessMedia\Utility;
 
 /**
- * @todo make testable and test
+ * Class Divi
  */
 class Divi extends Compatibility {
   protected $id = 'divi';
@@ -32,14 +32,33 @@ class Divi extends Compatibility {
    */
   public function module_init($sm) {
     // exclude randomize_filename from export
-    if (!empty($_GET['et_core_portability']) || wp_doing_ajax() && (!empty($_POST['action'])
-        && $_POST['action'] == 'et_core_portability_export') || (!empty($_POST['et_core_portability_export'])
-        && $_POST['et_core_portability_export'] == 'et_core_portability_export')) {
-      remove_filter('sanitize_file_name', array("wpCloud\StatelessMedia\Utility", 'randomize_filename'), 10);
-    }
+    add_action('admin_init', array($this, 'admin_init'), 5);
+    add_action('wp_ajax_et_core_portability_export', array($this, 'portability_ajax_export'), 5);
 
     // maybe skip cache busting
     add_filter('stateless_skip_cache_busting', array($this, 'maybe_skip_cache_busting'), 10, 2);
+  }
+
+  /**
+   * Disable Cache Busting when exporting Divi Options
+   */
+  public function admin_init() {
+    if ( empty($_GET['et_core_portability']) ) {
+      return;
+    }
+
+    if ( ! wp_verify_nonce( $_GET['nonce'] ?? '', 'et_core_portability_export' ) ) {
+      return;
+    }
+
+    remove_filter('sanitize_file_name', array("wpCloud\StatelessMedia\Utility", 'randomize_filename'), 10);
+  }
+
+  /**
+   * Disable Cache Busting when exporting Divi Options
+   */
+  public function portability_ajax_export() {
+    remove_filter('sanitize_file_name', array("wpCloud\StatelessMedia\Utility", 'randomize_filename'), 10);
   }
 
   /**
