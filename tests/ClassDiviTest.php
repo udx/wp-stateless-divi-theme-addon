@@ -1,6 +1,6 @@
 <?php
 
-namespace WPSL\Divi;
+namespace SLCA\Divi;
 
 use PHPUnit\Framework\TestCase;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
@@ -25,17 +25,6 @@ class ClassDiviTest extends TestCase {
 		parent::setUp();
 		Monkey\setUp();
 
-    // WP mocks
-    // Functions\when('wp_upload_dir')->justReturn( self::TEST_UPLOAD_DIR );
-    Functions\when('wp_doing_ajax')->justReturn( true );
-        
-    // WP_Stateless mocks
-    // Filters\expectApplied('wp_stateless_file_name')
-    //   ->andReturn( self::TEST_FILE );
-
-    // Filters\expectApplied('wp_stateless_handle_root_dir')
-    //   ->andReturn( 'uploads' );
-
     Functions\when('ud_get_stateless_media')->justReturn( WPStatelessStub::instance() );
   }
 
@@ -45,37 +34,47 @@ class ClassDiviTest extends TestCase {
 	}
 
   public function testShouldInitModule() {
-    // self::$functions->expects($this->exactly(1))
-    //   ->method('add_filter')
-    //   ->with('stateless_skip_cache_busting');
-
-    // $_POST['action'] = 'et_core_portability_export';
-
-    // self::$functions->expects($this->exactly(1))
-    //   ->method('remove_filter')
-    //   ->with('sanitize_file_name');
-
     $divi = new Divi();
-
-    add_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]);
 
     $divi->module_init([]);
 
-    self::assertNotFalse( has_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]) );
+    self::assertNotFalse( has_action('admin_init', [ $divi, 'admin_init' ]) );
+    self::assertNotFalse( has_action('wp_ajax_et_core_portability_export', [ $divi, 'portability_ajax_export' ]) );
     self::assertNotFalse( has_filter('stateless_skip_cache_busting', [ $divi, 'maybe_skip_cache_busting' ]) );
   }
 
-  public function testShouldInitModuleAjax() {
+  public function testShouldRandomizeFileNameOnGetRequest() {
     $divi = new Divi();
-
-    $_POST['action'] = 'et_core_portability_export';
 
     add_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]);
 
-    $divi->module_init([]);
-    
+    $divi->admin_init();
+
+    self::assertNotFalse( has_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]) );
+  }
+
+  public function testShouldNotRandomizeFileNameOnGetRequest() {
+    $divi = new Divi();
+
+    add_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]);
+
+    $_GET['et_core_portability'] = true;
+
+    Functions\when('wp_verify_nonce')->justReturn( true );
+
+    $divi->admin_init();
+
     self::assertFalse( has_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]) );
-    self::assertNotFalse( has_filter('stateless_skip_cache_busting', [ $divi, 'maybe_skip_cache_busting' ]) );
+  }
+
+  public function testShouldNotRandomizeFileNameOnPostRequest() {
+    $divi = new Divi();
+
+    add_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]);
+
+    $divi->portability_ajax_export();
+
+    self::assertFalse( has_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]) );
   }
 
   public function testShouldSkipCacheBusting() {
