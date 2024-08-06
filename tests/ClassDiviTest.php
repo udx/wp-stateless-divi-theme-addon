@@ -59,7 +59,10 @@ class ClassDiviTest extends TestCase {
     add_filter('sanitize_file_name', [ 'wpCloud\StatelessMedia\Utility', 'randomize_filename' ]);
 
     $_GET['et_core_portability'] = true;
+    $_GET['nonce'] = 'test';
 
+    Functions\when('wp_unslash')->returnArg();
+    Functions\when('sanitize_text_field')->returnArg();
     Functions\when('wp_verify_nonce')->justReturn( true );
 
     $divi->admin_init();
