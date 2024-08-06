@@ -47,7 +47,7 @@ class Divi extends Compatibility {
       return;
     }
 
-    if ( ! wp_verify_nonce( $_GET['nonce'] ?? '', 'et_core_portability_export' ) ) {
+    if ( ! isset( $_GET['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_GET['nonce'] ) ) , 'et_core_portability_export' ) ) {
       return;
     }
 
