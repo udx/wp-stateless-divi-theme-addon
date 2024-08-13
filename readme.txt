@@ -1,4 +1,4 @@
-=== WP-Stateless - Divi Addon ===
+=== WP-Stateless - Divi Theme Addon ===
 Contributors: usability_dynamics, andypotanin, ideric, maxim.peshkov, planvova, obolgun
 Donate link: https://udx.io
 Tags: divi, divi addon extension, google cloud storage, stateless, wp-stateless
