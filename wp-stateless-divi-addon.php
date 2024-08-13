@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Plugin Name: WP-Stateless - Divi Addon
+ * Plugin Name: WP-Stateless - Divi Theme Addon
  * Plugin URI: https://stateless.udx.io/addons/divi/
  * Description: Provides compatibility between the Divi theme and the WP-Stateless plugin.
  * Author: UDX
  * Version: 0.0.1
- * Text Domain: wp-stateless-divi-addon
+ * Text Domain: wp-stateless-divi-theme-addon
  * Author URI: https://udx.io
  * License: GPLv2 or later
  * 
@@ -24,7 +24,7 @@ add_action('plugins_loaded', function () {
 
   add_filter('plugin_row_meta', function ($plugin_meta, $plugin_file, $_, $__) {
     if ($plugin_file !== join(DIRECTORY_SEPARATOR, [basename(__DIR__), basename(__FILE__)])) return $plugin_meta;
-    $plugin_meta[] = sprintf('<span style="color:red;">%s</span>', __('This plugin requires WP-Stateless plugin version 3.4.0 or greater to be installed and active.', 'wp-stateless-divi-addon'));
+    $plugin_meta[] = sprintf('<span style="color:red;">%s</span>', __('This plugin requires WP-Stateless plugin version 3.4.0 or greater to be installed and active.', 'wp-stateless-divi-theme-addon'));
     return $plugin_meta;
   }, 10, 4);
 });
