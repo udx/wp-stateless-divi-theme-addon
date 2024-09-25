@@ -13,14 +13,14 @@ Provides compatibility between the [Divi theme](https://www.elegantthemes.com/ga
 
 ### Support, Feedback, & Contribute
 
-We welcome community involvement via the [GitHub repository](https://github.com/udx/wp-stateless-divi-addon).
+We welcome community involvement via the [GitHub repository](https://github.com/udx/wp-stateless-divi-theme-addon).
 
 ### Frequently Asked Questions
 
 <details>
 <summary>Where can I submit feature requests or bug reports?</summary>
 
-We encourage community feedback and discussion through issues on the [GitHub repository](https://github.com/udx/wp-stateless-divi-addon/issues).
+We encourage community feedback and discussion through issues on the [GitHub repository](https://github.com/udx/wp-stateless-divi-theme-addon/issues).
 </details>
 
 <details>

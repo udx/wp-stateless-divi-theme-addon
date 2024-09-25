@@ -25,13 +25,13 @@ Provides compatibility between the [Divi theme](https://www.elegantthemes.com/ga
 
 = Support, Feedback, & Contribute =
 
-We welcome community involvement via the [GitHub repository](https://github.com/udx/wp-stateless-divi-addon).
+We welcome community involvement via the [GitHub repository](https://github.com/udx/wp-stateless-divi-theme-addon).
 
 == Frequently Asked Questions ==
 
 = Where can I submit feature requests or bug reports? =
 
-We encourage community feedback and discussion through issues on the [GitHub repository](https://github.com/udx/wp-stateless-divi-addon/issues).
+We encourage community feedback and discussion through issues on the [GitHub repository](https://github.com/udx/wp-stateless-divi-theme-addon/issues).
 
 = Can I test new features before they are released? =
 
